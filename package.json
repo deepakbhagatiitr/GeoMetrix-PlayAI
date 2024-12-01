@@ -19,6 +19,7 @@
     "react-icons": "^5.2.1",
     "react-jigsaw-puzzle": "^1.0.5",
     "react-konva": "^18.2.10",
+    "react-pygame": "file:",
     "react-router-dom": "^6.23.1",
     "react-turtle": "^0.1.6",
     "roughjs": "^4.6.6"

@@ -8,8 +8,8 @@ const DrawingApp = () => {
     const [shape, setShape] = useState('');
     const strokeWidth = 4;
     const [loopCount, setLoopCount] = useState(1);
-    // const [jumpX, inputValues.jumpX] = useState(0);
-    // const [jumpY, inputValues.jumpY] = useState(0);
+    
+    
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [inputValues, setInputValues] = useState({
         jumpX: 0,
@@ -18,16 +18,16 @@ const DrawingApp = () => {
     useEffect(() => {
         if (canvasRef.current) {
             const ctx = canvasRef.current.getContext('2d');
-            clearCanvas(ctx); // Clear the canvas
+            clearCanvas(ctx); 
             executeCommands();
         }
     }, [commands, shape, loopCount]);
-    // const handleLoopCountChange = (e) => {
-    //     setLoopCount(parseInt(e.target.value, 10));
-    // };
+    
+    
+    
     const handleCategoryClick = (category) => {
         if (selectedCategory === category) {
-            setSelectedCategory(null); // Close the paragraphs if clicked again
+            setSelectedCategory(null); 
         } else {
             setSelectedCategory(category);
         }
@@ -45,12 +45,12 @@ const DrawingApp = () => {
             setShape(label);
             handleCommand('shape', label);
         } else if (label === 'loop') {
-            // Create a new element for the loop command
+            
             const workspace = document.getElementById('workspace');
             const newNode = document.createElement('div');
             newNode.classList.add('dropped-command');
 
-            // Set up the loop command HTML including a select dropdown for loop counts
+            
 
             newNode.innerHTML = `
             <div class='mb-4'>
@@ -62,16 +62,16 @@ const DrawingApp = () => {
 
         `;
 
-            // Append the loop command to the workspace
+            
             workspace.appendChild(newNode);
 
-            // Add event listener to the dropdown to handle changes
+            
             newNode.querySelector('.loop-count-dropdown').addEventListener('change', handleInputChange);
 
-            // Clear the selected category to close the paragraph
+            
             setSelectedCategory(null);
         } else {
-            // Handle other commands like movement
+            
             const workspace = document.getElementById('workspace');
             const newNode = document.createElement('div');
             newNode.innerHTML = document.getElementById(label).outerHTML;
@@ -81,7 +81,7 @@ const DrawingApp = () => {
                 input.addEventListener('input', handleInputChange);
             });
 
-            // Clear the selected category to close the paragraph
+            
             setSelectedCategory(null);
         }
     };
@@ -127,9 +127,9 @@ const DrawingApp = () => {
         setCommands((prevCommands) => [...prevCommands, { command, value: commandValue }]);
     };
     const executeShapeCommand = (ctx, shape, x, y) => {
-        // clearCanvas(ctx); // Clear the canvas before drawing a new shape
-        drawShape(ctx, shape, x, y); // Draw the new shape
-        setShape(''); // Reset the shape after drawing
+        
+        drawShape(ctx, shape, x, y); 
+        setShape(''); 
     };
     const executeCommands = async () => {
         const canvas = canvasRef.current;
@@ -157,7 +157,7 @@ const DrawingApp = () => {
                             y += Math.sin((angle * Math.PI) / 180);
                             ctx.lineTo(x, y);
                             ctx.stroke();
-                            await new Promise((r) => setTimeout(r, 1)); // Reduced delay
+                            await new Promise((r) => setTimeout(r, 1)); 
                         }
                         break;
                     case 'moveBackward':
@@ -166,7 +166,7 @@ const DrawingApp = () => {
                             y -= Math.sin((angle * Math.PI) / 180);
                             ctx.lineTo(x, y);
                             ctx.stroke();
-                            await new Promise((r) => setTimeout(r, 1)); // Reduced delay
+                            await new Promise((r) => setTimeout(r, 1)); 
                         }
                         break;
                     case 'turnLeft':
@@ -225,7 +225,7 @@ const DrawingApp = () => {
 
 
     const drawCircle = async (ctx, cx, cy, radius) => {
-        ctx.beginPath(); // Start a new path
+        ctx.beginPath(); 
         for (let angle = 0; angle <= 360; angle += 5) {
             const x = cx + radius * Math.cos((angle * Math.PI) / 180);
             const y = cy + radius * Math.sin((angle * Math.PI) / 180);
@@ -235,13 +235,13 @@ const DrawingApp = () => {
                 ctx.lineTo(x, y);
             }
             ctx.stroke();
-            await new Promise((r) => setTimeout(r, 1)); // Reduced delay
+            await new Promise((r) => setTimeout(r, 1)); 
         }
-        ctx.closePath(); // Close the path
+        ctx.closePath(); 
     };
 
     const drawSquare = async (ctx, cx, cy, size) => {
-        ctx.beginPath(); // Start a new path
+        ctx.beginPath(); 
         const corners = [
             [cx - size / 2, cy - size / 2],
             [cx + size / 2, cy - size / 2],
@@ -256,15 +256,15 @@ const DrawingApp = () => {
                 ctx.lineTo(x, y);
             }
             ctx.stroke();
-            await new Promise((r) => setTimeout(r, 100)); // Reduced delay
+            await new Promise((r) => setTimeout(r, 100)); 
         }
         ctx.lineTo(corners[0][0], corners[0][1]);
-        ctx.closePath(); // Close the path
+        ctx.closePath(); 
         ctx.stroke();
     };
 
     const drawStar = async (ctx, cx, cy, spikes, outerRadius, innerRadius) => {
-        ctx.beginPath(); // Start a new path
+        ctx.beginPath(); 
         let rot = Math.PI / 2 * 3;
         let x = cx;
         let y = cy;
@@ -283,17 +283,17 @@ const DrawingApp = () => {
             rot += step;
         }
         ctx.lineTo(cx, cy - outerRadius);
-        ctx.closePath(); // Close the path
+        ctx.closePath(); 
         ctx.stroke();
     };
 
     const drawTriangle = async (ctx, cx, cy, size) => {
         const height = (Math.sqrt(3) / 2) * size;
-        ctx.beginPath(); // Start a new path
+        ctx.beginPath(); 
         ctx.moveTo(cx, cy - height / 2);
         ctx.lineTo(cx - size / 2, cy + height / 2);
         ctx.lineTo(cx + size / 2, cy + height / 2);
-        ctx.closePath(); // Close the path
+        ctx.closePath(); 
         ctx.stroke();
     };
 
